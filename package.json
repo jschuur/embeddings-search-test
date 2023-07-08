@@ -18,5 +18,10 @@
     "@types/node": "^20.4.1",
     "tsx": "^3.12.7",
     "typescript": "^5.1.6"
+  },
+  "cspell": {
+    "ignorePaths": [
+      "data/*.json"
+    ]
   }
 }

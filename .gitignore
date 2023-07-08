@@ -1,2 +1,5 @@
 node_modules
 .env*
+
+data/videos.json
+data/embeddings.json

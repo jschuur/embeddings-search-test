@@ -1,17 +1,24 @@
 import 'dotenv/config';
 
-import { getVideos, processVideo, tokensUsed } from './lib';
+import { VideoEmbedding, getVideos, processVideo, saveEmbeddings, tokensUsed } from './lib';
 
 (async () => {
   const videos = getVideos();
+  const embeddingData: VideoEmbedding[] = [];
 
   for (const video of videos) {
     console.log(`Processing video: ${video.title}`);
 
     const response = await processVideo(video);
 
-    console.log(response.data.data);
+    embeddingData.push({
+      videoId: video.id,
+      title: video.title,
+      embedding: response.data.data[0].embedding,
+    });
   }
 
   console.log(`Tokens used: ${tokensUsed}`);
+
+  saveEmbeddings(embeddingData);
 })();

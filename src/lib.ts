@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { readFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 import { Configuration, CreateEmbeddingRequest, OpenAIApi } from 'openai';
 import { z } from 'zod';
 
@@ -22,11 +22,18 @@ const VideoSchema = z.object({
 });
 export type Video = z.infer<typeof VideoSchema>;
 
+const VideoEmbeddingSchema = z.object({
+  title: z.string(),
+  videoId: z.string(),
+  embedding: z.array(z.number()),
+});
+export type VideoEmbedding = z.infer<typeof VideoEmbeddingSchema>;
+
 export let tokensUsed = 0;
 
 export function getVideos(): Video[] {
-  const rawData = readFileSync('src/videos.json');
-  const data = JSON.parse(rawData.toString());
+  const videoData = readFileSync('data/videos.json');
+  const data = JSON.parse(videoData.toString());
   const videos = z.array(VideoSchema).parse(data);
 
   return videos;
@@ -43,4 +50,10 @@ export async function processVideo(video: Video) {
   tokensUsed += response.data.usage.total_tokens;
 
   return response;
+}
+
+export function saveEmbeddings(embeddingsData: VideoEmbedding[]) {
+  const data = JSON.stringify(embeddingsData, null, 2);
+
+  writeFileSync('data/embeddings.json', data);
 }
