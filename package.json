@@ -1,5 +1,5 @@
 {
-  "name": "embeddings-test",
+  "name": "embeddings-search-test",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,17 +11,15 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.3.1",
+    "drizzle-orm": "^0.27.2",
     "openai": "^3.3.0",
+    "pgvector": "git://github.com/pgvector/pgvector-node",
+    "postgres": "^3.3.5",
     "zod": "^3.21.4"
   },
   "devDependencies": {
     "@types/node": "^20.4.1",
     "tsx": "^3.12.7",
     "typescript": "^5.1.6"
-  },
-  "cspell": {
-    "ignorePaths": [
-      "data/*.json"
-    ]
   }
 }
